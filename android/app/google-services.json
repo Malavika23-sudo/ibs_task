@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "67251496445",
+    "project_id": "ibs-task-b3036",
+    "storage_bucket": "ibs-task-b3036.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67251496445:android:c0d2d3378fbb2c39222594",
+        "android_client_info": {
+          "package_name": "com.example.ibs_dubai_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67251496445-spa46plnhmu4gbbdm5lt56m6u5dt6ncj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4btDOuoj6Xv6pUr3XiwVvq8dyE3XzwFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67251496445-spa46plnhmu4gbbdm5lt56m6u5dt6ncj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
