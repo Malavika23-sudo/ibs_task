@@ -15,15 +15,15 @@ ThemeData theme() {
 TextTheme textTheme() {
   return TextTheme(
     headline1: TextStyle(
-        color: Colors.black, fontSize: 28, fontWeight: FontWeight.w600,fontFamily: 'Inter-SemiBold'),
+        color: Colors.white, fontSize: 28, fontWeight: FontWeight.w600,fontFamily: 'Inter-Bold'),
     headline2:
-        TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w300,fontFamily: 'Inter-SemiBold'),
+        TextStyle(color: Color(0xff196819), fontSize: 12, fontWeight: FontWeight.w400,fontFamily: 'Inter'),
     headline3: TextStyle(
-        color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400,fontFamily: 'Inter-SemiBold'),
+        color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400,fontFamily: 'Inter'),
     headline4: TextStyle(
         color: Colors.black, fontSize: 8, fontWeight: FontWeight.w300,fontFamily: 'Inter'),
-    // headline5: TextStyle(
-    //     color: Color(0xff757575), fontSize: 12, fontWeight: FontWeight.w400,fontFamily: 'Inter'),
+    headline5: TextStyle(
+        color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600,fontFamily: 'Inter'),
     // headline6: TextStyle(
     //     color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400,fontFamily: 'Inter'),
     // bodyText1: TextStyle(

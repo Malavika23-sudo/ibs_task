@@ -5,7 +5,6 @@ class Employee {
   final String? name;
   final String? dob;
   final String? gender;
-
   final String? image;
 
   Employee({this.id, this.name, this.gender, this.dob, this.image});
@@ -17,6 +16,6 @@ class Employee {
       id: json['id'],
       name: json['name'],
       gender: json['gender'],
-      dob: (json['dob'] as Timestamp).toDate().toString(),
+      dob: (json['dob'] ).toString(),
       image: json['image']);
 }
