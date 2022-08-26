@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:ibs_dubai_task/views/employee_list_screen.dart';
-
 import '../models/employee_model.dart';
 
 class EmployeeAddScreen extends StatefulWidget {
@@ -26,6 +25,7 @@ class _EmployeeAddScreenState extends State<EmployeeAddScreen> {
   String? gender = 'Select';
   String? filename = 'No image Selected';
   bool pressed = false;
+  PlatformFile? Pickedfile;
 
   Future CreateEmployee({required Employee emp}) async {
     final docEmp = FirebaseFirestore.instance.collection('employee').doc(id);
@@ -245,7 +245,6 @@ class _EmployeeAddScreenState extends State<EmployeeAddScreen> {
                     firstDate: DateTime(1900),
                     lastDate: DateTime(2100),
                     dateLabelText: 'Date of Birth',
-
                     style: TextStyle(fontSize: 14),
                     onChanged: (val) {
                       date = val;
@@ -264,20 +263,13 @@ class _EmployeeAddScreenState extends State<EmployeeAddScreen> {
                           left: ScreenUtil().setWidth(16)),
                       child: TextButton(
                           onPressed: () async {
-                            // final result =  FilePicker.platform.pickFiles();
                             FilePickerResult? result =
                                 await FilePicker.platform.pickFiles();
-
                             if (result != null) {
-                              PlatformFile Pickedfile = result.files.first;
+                               Pickedfile = result.files.first;
                               setState(() {
-                                filename = Pickedfile.name.toString();
+                                filename = Pickedfile!.name.toString();
                               });
-
-                              // print(Pickedfile!.bytes);
-                              // print(Pickedfile!.size);
-                              // print(Pickedfile!.extension);
-                              // print(Pickedfile!.path);
                             } else {
                               return;
                             }
@@ -335,6 +327,9 @@ class _EmployeeAddScreenState extends State<EmployeeAddScreen> {
                       left: ScreenUtil().setWidth(16)),
                   child: TextButton(
                       onPressed: () {
+                        final path='';
+                        // final file=File(100, Pickedfile!.path);
+
                         print(
                             "id==========================================>>> $id");
                         print(
@@ -386,20 +381,20 @@ class _EmployeeAddScreenState extends State<EmployeeAddScreen> {
                           // });
                           // userModels.userModel.add(UserModel(name: name));
 
-                          // if (_formKey.currentState!.validate() ||
-                          //     (name != null &&
-                          //         id != null &&
-                          //         date != DateTime.now() &&
-                          //         gender != 'selected' &&
-                          //         gender != null &&
-                          //         filename != 'No image Selected' &&
-                          //         filename != null)) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EmployeeList()),
-                          );
-                          //                            }
+                          if (_formKey.currentState!.validate() ||
+                              (name != null &&
+                                  id != null &&
+                                  date != DateTime.now() &&
+                                  gender != 'selected' &&
+                                  gender != null &&
+                                  filename != 'No image Selected' &&
+                                  filename != null)) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EmployeeList()),
+                            );
+                          }
                           nameEditingController.clear();
                           idEditingController.clear();
                         },
@@ -473,89 +468,3 @@ class TextBox extends StatelessWidget {
   }
 }
 
-// class GenderDropDown extends StatefulWidget {
-//   const GenderDropDown({Key? key}) : super(key: key);
-//
-//   @override
-//   State<GenderDropDown> createState() => _GenderDropDownState();
-// }
-//
-// class _GenderDropDownState extends State<GenderDropDown> {
-//   String dropdownValue = 'Select';
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ;
-//   }
-// }
-
-// class HomeScreen extends StatefulWidget {
-//   static String routeName = "/homeScreen";
-//
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-//
-// class _HomeScreenState extends State<HomeScreen> {
-
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     ScreenUtil.init(context,
-//         designSize: Size(414, 896), allowFontScaling: true);
-//     return
-//   }
-// }
-//
-// class TextBox extends StatelessWidget {
-//   double left;
-//   bool obscure;
-//   Widget? toggleHide;
-//   void Function(String? val)? onChange;
-//   TextInputType? textType = TextInputType.multiline;
-//   final String? Function(String? value)? onValidate;
-//   TextEditingController? textEditingController;
-//
-//   TextBox(
-//       {this.left = 16,
-//         this.obscure = false,
-//         this.toggleHide,
-//         this.textType,
-//         this.onChange,
-//         this.onValidate,
-//         this.textEditingController});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: double.infinity,
-//       // height: ScreenUtil().setWidth(48),
-//       child: TextFormField(
-//         controller: textEditingController,
-//         validator: onValidate,
-//         onChanged: onChange,
-//         obscureText: obscure,
-//         keyboardType: textType,
-//         decoration: InputDecoration(
-//           errorStyle: TextStyle(
-//             color: Colors.red,
-//             fontSize: 12,
-//             fontWeight: FontWeight.w400,
-//           ),
-//           suffixIcon: toggleHide,
-//           enabledBorder: OutlineInputBorder(
-//               borderSide: BorderSide(color: Color(0xffC9C9C9), width: 1)),
-//           focusedBorder: OutlineInputBorder(
-//               borderSide: BorderSide(color: Color(0xffC9C9C9), width: 1)),
-//           border: OutlineInputBorder(
-//             borderSide: BorderSide(color: Color(0xffC9C9C9), width: 1),
-//           ),
-//           fillColor: Color(0xffF8F8F8),
-//           filled: true,
-//           contentPadding: EdgeInsets.only(
-//               top: ScreenUtil().setWidth(38), left: ScreenUtil().setWidth(15)),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -24,12 +24,12 @@ TextTheme textTheme() {
         color: Colors.black, fontSize: 8, fontWeight: FontWeight.w300,fontFamily: 'Inter'),
     headline5: TextStyle(
         color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600,fontFamily: 'Inter'),
-    // headline6: TextStyle(
-    //     color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400,fontFamily: 'Inter'),
-    // bodyText1: TextStyle(
-    //     color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700,fontFamily: 'Inter-Bold'),
-    // bodyText2: TextStyle(
-    //     color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600,fontFamily: 'Inter-SemiBold'),
+    headline6: TextStyle(
+        color: Colors.black, fontSize: 32, fontWeight: FontWeight.w700,fontFamily: 'Inter-Bold'),
+    bodyText1: TextStyle(
+        color: Color(0xff196819), fontSize: 16, fontWeight: FontWeight.w500,fontFamily: 'Inter'),
+    bodyText2: TextStyle(
+        color: Color(0xff196819), fontSize: 16, fontWeight: FontWeight.w700,fontFamily: 'Inter-Bold'),
     // subtitle1: TextStyle(
     //     color: Colors.black, fontSize: 14, fontWeight: FontWeight.w400,fontFamily: 'Inter'),
     // subtitle2: TextStyle(

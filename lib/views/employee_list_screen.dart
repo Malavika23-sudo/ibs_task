@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 
-import '../models/employee_model.dart';
+import 'employee_details_screen.dart';
 
 class EmployeeList extends StatefulWidget {
   @override
@@ -14,13 +14,9 @@ class _EmployeeListState extends State<EmployeeList> {
   List selectedTabs = [];
   bool? isSelected = false;
   bool exist = false;
-
-  void initState() {
-    getDocId();
-  }
-
   List<String> docId = [];
   List<String> SelectedDocIds = [];
+
   Future getDocId() async {
     print('START OF GETID FUNCTION');
     await _firebasecore
@@ -37,17 +33,22 @@ class _EmployeeListState extends State<EmployeeList> {
             }));
   }
 
-  void deleteAll(id){
-    SelectedDocIds.add(_firebasecore
-        .collection('employee').doc(id).toString());
+  void deleteAll() {
+    print("SELECTEDID==========> $SelectedDocIds");
+    setState(() {
+      if (SelectedDocIds.isNotEmpty)
+        SelectedDocIds.forEach((employee) {
+          _firebasecore.collection('employee').doc(employee).delete();
+          SelectedDocIds.remove(employee);
+          docId.remove(employee);
+          selectedTabs.clear();
+        });
+    });
+
     print("SELECTEDID==========> $SelectedDocIds");
   }
-  // Future<Stream<List<Employee>>> readEmployee() async{
-  final _formKey = GlobalKey<FormState>();
 
-  Widget buildList(Employee emp) => ListTile(
-        leading: Text('${emp.id}'),
-      );
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -96,16 +97,36 @@ class _EmployeeListState extends State<EmployeeList> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
-                                  left: ScreenUtil().setWidth(16),
+                                  // left: ScreenUtil().setWidth(16),
                                   top: ScreenUtil().setWidth(32),
                                   bottom: ScreenUtil().setWidth(32),
                                 ),
-                                child: Text(
-                                  'Employee List',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1!
-                                      .merge(TextStyle(color: Colors.white)),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: ScreenUtil().setWidth(16),
+                                      ),
+                                      child: CircleAvatar(
+                                          child: BackButton(
+                                              color: Color(0xff196819)),
+                                          backgroundColor: Colors.white,
+                                          radius: 20),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: ScreenUtil().setWidth(12),
+                                      ),
+                                      child: Text(
+                                        'Employees',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline1!
+                                            .merge(
+                                                TextStyle(color: Colors.white)),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               // StreamBuilder<List<Employee>>(
@@ -136,6 +157,7 @@ class _EmployeeListState extends State<EmployeeList> {
                                           MediaQuery.of(context).size.height -
                                               250,
                                       child: ListView.builder(
+                                          // reverse: true,
                                           itemCount: docId.length,
                                           itemBuilder: (context, index) {
                                             return Padding(
@@ -172,27 +194,39 @@ class _EmployeeListState extends State<EmployeeList> {
                                                 child: ListTile(
                                                   onLongPress: () {
                                                     setState(() {
-                                                      selectedTabs
-                                                          .add(index);
+                                                      print(
+                                                          '<<<<<<<<<<ID of document===============> ${docId[index]}');
+                                                      selectedTabs.add(index);
+
+                                                      SelectedDocIds.add(
+                                                          docId[index]);
                                                     });
                                                   },
-                                                  trailing: selectedTabs.contains(index)
+                                                  trailing: selectedTabs
+                                                          .contains(index)
                                                       ? Container(
-                                                    width: 50,
-                                                        child: IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        selectedTabs.remove(index);
-                                                      });
-
-                                                    },
-                                                    icon: Icon(
-                                                          Icons.close),
-                                                          iconSize: 35,
-                                                    color: Colors.green,
-                                                  ),
-                                                      )
-                                                      : Container(height: 0,width: 0,),
+                                                          width: 50,
+                                                          child: IconButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                selectedTabs
+                                                                    .remove(
+                                                                        index);
+                                                                SelectedDocIds
+                                                                    .remove(docId[
+                                                                        index]);
+                                                              });
+                                                            },
+                                                            icon: Icon(
+                                                                Icons.close),
+                                                            iconSize: 35,
+                                                            color: Colors.green,
+                                                          ),
+                                                        )
+                                                      : Container(
+                                                          height: 0,
+                                                          width: 0,
+                                                        ),
                                                   // leading: CircleAvatar(
                                                   //   backgroundColor:
                                                   //       Colors.green[700],
@@ -215,6 +249,17 @@ class _EmployeeListState extends State<EmployeeList> {
                                                   // ),
 
                                                   onTap: () {
+                                                    print('TAPPED');
+
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              EmployeeDetails(
+                                                                docId: docId[
+                                                                    index],
+                                                              )),
+                                                    );
                                                     // setState(() {
                                                     //   contacts[index].isSelected = !contacts[index].isSelected;
                                                     //   if (contacts[index].isSelected == true) {
@@ -242,24 +287,10 @@ class _EmployeeListState extends State<EmployeeList> {
                         child: Container(
                           width: double.infinity,
                           child: TextButton(
-                              onPressed: () async {
-                                final selectedIds= await _firebasecore
-                                    .collection('employee')
-                                    .get()
-                                    .then((value) => value.docs.forEach((element) {
-                                  print('element.reference.id');
-                                  docId.add(element.reference.id);
-
-                                }));
-                                // setState(() {
-                                //
-                                // });
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => EmployeeList()),
-                                // );
-                                //
+                              onPressed: () {
+                                setState(() {
+                                  deleteAll();
+                                });
                               },
                               child: Text('Delete',
                                   style: Theme.of(context)
