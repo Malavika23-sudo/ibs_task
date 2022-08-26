@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:ibs_dubai_task/views/employee_add_screen.dart';
+import 'package:ibs_dubai_task/views/employee_list_screen.dart';
 
 class EmployeeDetails extends StatefulWidget {
   final String? docId;
@@ -80,7 +80,7 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EmployeeAddScreen()),
+                              builder: (context) => EmployeeList()),
                         );
                       },
                       child: Container(
@@ -181,9 +181,9 @@ class GetEmployeeDetails extends StatelessWidget {
                           ),
                           child: CircleAvatar(
                             backgroundColor: Colors.green,
-                            backgroundImage: AssetImage('assets/images/img.jpg'),
+                            backgroundImage:
+                                AssetImage('assets/images/img.jpg'),
                             radius: 50,
-
                           ),
                         ),
                         Padding(
