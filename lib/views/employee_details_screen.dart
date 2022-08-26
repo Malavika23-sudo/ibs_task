@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:ibs_dubai_task/views/employee_add_screen.dart';
 
 class EmployeeDetails extends StatefulWidget {
   final String? docId;
@@ -75,7 +76,12 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                     child: InkWell(
                       onTap: () {
                         deleteDoc();
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EmployeeAddScreen()),
+                        );
                       },
                       child: Container(
                         width: double.infinity,
